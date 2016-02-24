@@ -58,8 +58,8 @@ def screencap(episode, timestamp)
   body = JSON.parse(response.body)
   episode = body['Frame']['Episode']
   timestamp = body['Frame']['Timestamp']
-  subtitle = word_wrap(body['Subtitles'][0]['Content'], line_width: 25)
-  image = "https://frinkiac.com/meme/#{episode}/#{timestamp}.jpg?lines=#{URI.escape(subtitle)}"
+  subtitle = body['Subtitles'][0]['Content']
+  image = "https://frinkiac.com/meme/#{episode}/#{timestamp}.jpg?lines=#{URI.escape(word_wrap(subtitle, line_width: 25)}"
   return image, subtitle
 end
 
