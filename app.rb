@@ -59,7 +59,7 @@ def screencap(episode, timestamp)
   episode = body['Frame']['Episode']
   timestamp = body['Frame']['Timestamp']
   subtitle = body['Subtitles'][0]['Content']
-  image = "https://frinkiac.com/meme/#{episode}/#{timestamp}.jpg?lines=#{URI.escape(word_wrap(subtitle, line_width: 25)}"
+  image = "https://frinkiac.com/meme/#{episode}/#{timestamp}.jpg?lines=#{URI.escape(word_wrap(subtitle, line_width: 25))}"
   return image, subtitle
 end
 
