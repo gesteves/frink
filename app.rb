@@ -11,17 +11,19 @@ configure do
 end
 
 get '/' do
-  erb :index
+  erb :index, layout: :application
 end
 
 get '/auth' do
   if !params[:code].nil?
     token = get_access_token(params[:code])
-    body "Thanks! We've added the /frink command to your #{token['team_name']} team Slack."
-    status 200
+    if token['ok']
+      erb :success, layout: :application
+    else
+      erb :fail, layout: :application
+    end
   else
-    status 403
-    body 'Nope'
+    erb :fail, layout: :application
   end
 end
 
@@ -68,6 +70,7 @@ def closest_subtitle(text, subtitles)
   subtitles.max { |a, b| white.similarity(a['Content'], text) <=> white.similarity(b['Content'], text) }['Content']
 end
 
+# Borrowed from ActionView: https://github.com/rails/rails/blob/0e50b7bdf4c0f789db37e22dc45c52b082f674b4/actionview/lib/action_view/helpers/text_helper.rb#L240-L246
 def word_wrap(text, options = {})
   line_width = options.fetch(:line_width, 80)
   text.split("\n").collect! do |line|

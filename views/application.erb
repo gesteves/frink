@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Guillermo Esteves" />
+    <meta name="description" content="A Slack app that pulls Simpsons screencaps from Frinkiac." />
+    <meta name="viewport" content="width=device-width" />
+    <meta property="og:title" content="Frinkiac for Slack"/>
+    <meta property="og:url" content="<%= "#{request.scheme}://#{request.host_with_port}" %>"/>
+    <meta property="og:image" content="http://i.imgur.com/XB1swAP.jpg" />
+    <meta property="og:site_name" content="Frinkiac for Slack"/>
+    <meta property="og:description" content="A Slack app that pulls Simpsons screencaps from Frinkiac."/>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content="A Slack app that pulls Simpsons screencaps from Frinkiac." />
+    <meta name="twitter:title" content="Frinkiac for Slack" />
+    <meta name="twitter:image:src" content="http://i.imgur.com/XB1swAP.jpg" />
+    <meta name="twitter:url" content="<%= "#{request.scheme}://#{request.host_with_port}" %>" />
+    <meta name="twitter:site" content="<%= "#{request.scheme}://#{request.host_with_port}" %>" />
+    <meta name="twitter:creator" content="@gesteves" />
+    <title>Frinkiac for Slack</title>
+    <style type="text/css">
+      html,
+      body {
+        background-color: #fff;
+        color: #333;
+      }
+      .container {
+        font-family: 'Helvetica Neue', sans-serif;
+        margin: 0 auto;
+        max-width: 600px;
+        text-align: center;
+      }
+      h1 {
+        font-size: 24x;
+        font-weight: bold;
+        line-height: 1;
+        margin: 1em 0;
+      }
+      p {
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.5;
+        margin: 1.5em 0;
+      }
+      p.disclaimer {
+        color: #999;
+        font-size: 12px;
+        line-height: 2;
+        margin: 2em 0;
+      }
+      a:link,
+      a:visited,
+      a:hover,
+      a:active {
+        color: #bf0222;
+        text-decoration: none;
+      }
+      code {
+        background-color: #fdfdfd;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        color: #999;
+        font-size: 12px;
+        padding: 2px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Frinkiac for Slack</h1>
+      <%= yield %>
+    </div>
+  </body>
+</html>
