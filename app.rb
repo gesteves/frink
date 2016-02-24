@@ -76,6 +76,6 @@ def get_access_token(code)
 end
 
 def build_slack_response(text)
-  response = { text: text, response_type: 'in_channel' }
+  response = { text: text, response_type: 'in_channel', link_names: 1 }
   response.to_json
 end
