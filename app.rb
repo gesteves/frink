@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'json'
 require 'httparty'
-require 'redis'
 require 'dotenv'
 require 'uri'
 require 'text'
