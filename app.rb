@@ -4,7 +4,7 @@ require 'httparty'
 require 'redis'
 require 'dotenv'
 require 'uri'
-
+require 'text'
 
 configure do
   Dotenv.load
@@ -28,14 +28,15 @@ end
 
 post '/search' do
   if params[:token] == ENV['SLACK_VERIFICATION_TOKEN']
-    results = search(params[:text])
+    query = params[:text]
+    results = search(query)
     if results.size == 0
       text = 'No results found!'
     else
       best_match = results.first
       episode = best_match['Episode']
       timestamp = best_match['Timestamp']
-      image, subtitle = screencap(episode, timestamp)
+      image, subtitle = screencap(query, episode, timestamp)
       text = "<#{image}|#{subtitle}>"
     end
     status 200
@@ -53,14 +54,19 @@ def search(query)
   JSON.parse(response.body)
 end
 
-def screencap(episode, timestamp)
+def screencap(query, episode, timestamp)
   response = HTTParty.get("https://frinkiac.com/api/caption?e=#{episode}&t=#{timestamp}")
   body = JSON.parse(response.body)
   episode = body['Frame']['Episode']
   timestamp = body['Frame']['Timestamp']
-  subtitle = body['Subtitles'][0]['Content']
+  subtitle = closest_subtitle(query, body['Subtitles'])
   image = "https://frinkiac.com/meme/#{episode}/#{timestamp}.jpg?lines=#{URI.escape(word_wrap(subtitle, line_width: 25))}"
   return image, subtitle
+end
+
+def closest_subtitle(text, subtitles)
+  white = Text::WhiteSimilarity.new
+  subtitles.sort { |a, b| white.similarity(b['Content'], text) <=> white.similarity(a['Content'], text) }.first['Content']
 end
 
 def word_wrap(text, options = {})
