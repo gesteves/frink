@@ -65,7 +65,7 @@ end
 
 def closest_subtitle(text, subtitles)
   white = Text::WhiteSimilarity.new
-  subtitles.sort { |a, b| white.similarity(b['Content'], text) <=> white.similarity(a['Content'], text) }.first['Content']
+  subtitles.max { |a, b| white.similarity(a['Content'], text) <=> white.similarity(b['Content'], text) }['Content']
 end
 
 def word_wrap(text, options = {})
