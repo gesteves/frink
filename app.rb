@@ -39,6 +39,7 @@ post '/search' do
       text = "<#{image}|#{subtitle}>"
     end
     status 200
+    headers 'Content-Type' => 'application/json'
     body build_slack_response(text)
   else
     body ''
