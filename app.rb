@@ -50,7 +50,7 @@ end
 private
 
 def search(query)
-  response = HTTParty.get("https://frinkiac.com/api/search?q=#{query}")
+  response = HTTParty.get("https://frinkiac.com/api/search?q=#{URI.escape(query)}")
   JSON.parse(response.body)
 end
 
