@@ -36,7 +36,7 @@ post '/search' do
       episode = best_match['Episode']
       timestamp = best_match['Timestamp']
       image, subtitle = screencap(episode, timestamp)
-      text = "<image|subtitle>"
+      text = "<#{image}|#{subtitle}>"
     end
     body build_slack_response(text)
   else
