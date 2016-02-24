@@ -38,6 +38,7 @@ post '/search' do
       image, subtitle = screencap(episode, timestamp)
       text = "<#{image}|#{subtitle}>"
     end
+    status 200
     body build_slack_response(text)
   else
     body ''
