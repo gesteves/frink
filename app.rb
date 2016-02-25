@@ -44,7 +44,8 @@ post '/search' do
     headers 'Content-Type' => 'application/json'
     body build_slack_response(text)
   else
-    body ''
+    status 401
+    body 'Unauthorized'
   end
 end
 
