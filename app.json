@@ -1,0 +1,25 @@
+{
+  "name": "Frinkiac for Slack",
+  "description": "A simple app that lets you pull Simpsons screencaps from Frinkiac in Slack! Just use the /frink command, followed by a quote from The Simpsons.",
+  "keywords": [
+    "slack",
+    "bot",
+    "simpsons"
+  ],
+  "repository": "https://github.com/gesteves/frinkiac-slack",
+  "success_url": "https://github.com/gesteves/frinkiac-slack",
+  "env": {
+    "SLACK_CLIENT_ID": {
+      "description": "Client ID of your Slack app.",
+      "required": true
+    },
+    "SLACK_CLIENT_SECRET": {
+      "description": "Client secret of your Slack app.",
+      "required": true
+    },
+    "SLACK_VERIFICATION_TOKEN": {
+      "description": "Verification token of your app's slash command.",
+      "required": true
+    }
+  }
+}
