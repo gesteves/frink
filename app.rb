@@ -35,7 +35,7 @@ post '/search' do
   if params[:token] == ENV['SLACK_VERIFICATION_TOKEN']
     query = params[:text].strip
     if query == ''
-      response = "D'oh! You have to enter a quote from The Simpsons, like `#{params[:command]} everything's comin' up Milhouse!`."
+      response = "D'oh! You have to enter a quote from The Simpsons, like `#{params[:command]} everything's comin' up Milhouse!`"
     else
       response = $cache.get(parameterize(query))
       if response.nil?
