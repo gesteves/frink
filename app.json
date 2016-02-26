@@ -9,6 +9,9 @@
   "repository": "https://github.com/gesteves/frinkiac-slack",
   "success_url": "https://github.com/gesteves/frinkiac-slack",
   "logo": "https://raw.githubusercontent.com/gesteves/frinkiac-slack/master/frink.png",
+  "addons": [
+    "memcachedcloud"
+  ],
   "env": {
     "SLACK_CLIENT_ID": {
       "description": "Client ID of your Slack app.",

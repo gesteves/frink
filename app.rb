@@ -4,10 +4,14 @@ require 'httparty'
 require 'dotenv'
 require 'uri'
 require 'text'
+require 'dalli'
 
 configure do
   Dotenv.load
   $stdout.sync = true
+  if ENV['MEMCACHEDCLOUD_SERVERS']
+    $cache = Dalli::Client.new(ENV['MEMCACHEDCLOUD_SERVERS'].split(','), username: ENV['MEMCACHEDCLOUD_USERNAME'], password: ENV['MEMCACHEDCLOUD_PASSWORD'])
+  end
 end
 
 get '/' do
@@ -30,19 +34,14 @@ end
 post '/search' do
   if params[:token] == ENV['SLACK_VERIFICATION_TOKEN']
     query = params[:text]
-    results = search(query)
-    if results.size == 0
-      text = 'No results found!'
-    else
-      best_match = results.first
-      episode = best_match['Episode']
-      timestamp = best_match['Timestamp']
-      image, subtitle = screencap(query, episode, timestamp)
-      text = "<#{image}|#{subtitle}>"
+    response = $cache.get(query)
+    if response.nil?
+      response = search(query)
+      $cache.set(query, response, 60*60*24)
     end
     status 200
     headers 'Content-Type' => 'application/json'
-    body build_slack_response(text)
+    body response
   else
     status 401
     body 'Unauthorized'
@@ -53,7 +52,18 @@ private
 
 def search(query)
   response = HTTParty.get("https://frinkiac.com/api/search?q=#{URI.escape(query)}")
-  JSON.parse(response.body)
+  results = JSON.parse(response.body)
+  if results.size == 0
+    text = 'No results found!'
+  else
+    best_match = results.first
+    episode = best_match['Episode']
+    timestamp = best_match['Timestamp']
+    image, subtitle = screencap(query, episode, timestamp)
+    text = "<#{image}|#{subtitle}>"
+  end
+  puts text
+  build_slack_response(text)
 end
 
 def screencap(query, episode, timestamp)
