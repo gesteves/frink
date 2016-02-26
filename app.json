@@ -1,6 +1,6 @@
 {
   "name": "Frinkiac for Slack",
-  "description": "A simple app that lets you pull Simpsons screencaps from Frinkiac in Slack! Just use the /frink command, followed by a quote from The Simpsons.",
+  "description": "A simple app that lets you pull Simpsons screencaps from Frinkiac in Slack!",
   "keywords": [
     "slack",
     "bot",
