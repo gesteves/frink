@@ -15,13 +15,16 @@ configure do
 end
 
 get '/' do
+  @page_title = "Frinkiac for Slack"
   erb :index, layout: :application
 end
 
 get '/auth' do
+  @page_title = "D'oh! &middot; Frinkiac for Slack"
   if !params[:code].nil?
     token = get_access_token(params[:code])
     if token['ok']
+      @page_title = "Woohoo! &middot; Frinkiac for Slack"
       erb :success, layout: :application
     else
       erb :fail, layout: :application
