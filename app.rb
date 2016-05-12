@@ -81,7 +81,7 @@ def screencap(query, episode, timestamp)
   episode = body['Frame']['Episode']
   timestamp = body['Frame']['Timestamp'].to_i
   subtitle = closest_subtitle(query, body['Subtitles'])
-  image = "https://frinkiac.com/gif/#{episode}/#{timestamp}/#{timestamp + 3000}.gif?lines=#{URI.escape(word_wrap(subtitle, line_width: 25))}"
+  image = "https://frinkiac.com/gif/#{episode}/#{timestamp - 2500}/#{timestamp + 2500}.gif?lines=#{URI.escape(word_wrap(subtitle, line_width: 25))}"
   return image, subtitle
 end
 
