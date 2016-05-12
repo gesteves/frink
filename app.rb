@@ -79,9 +79,9 @@ def screencap(query, episode, timestamp)
   response = HTTParty.get("https://frinkiac.com/api/caption?e=#{episode}&t=#{timestamp}")
   body = JSON.parse(response.body)
   episode = body['Frame']['Episode']
-  timestamp = body['Frame']['Timestamp']
+  timestamp = body['Frame']['Timestamp'].to_i
   subtitle = closest_subtitle(query, body['Subtitles'])
-  image = "https://frinkiac.com/meme/#{episode}/#{timestamp}.jpg?lines=#{URI.escape(word_wrap(subtitle, line_width: 25))}"
+  image = "https://frinkiac.com/gif/#{episode}/#{timestamp}/#{timestamp + 3000}.gif?lines=#{URI.escape(word_wrap(subtitle, line_width: 25))}"
   return image, subtitle
 end
 
