@@ -110,9 +110,9 @@ def parameterize(string)
   string.gsub(/[^a-z0-9]+/i, '-').downcase
 end
 
-def track(event_name, properties = nil)
+def track(event_name)
   if ENV['MIXPANEL_TOKEN']
-    $tracker.track(rand, event_name, properties)
+    $tracker.track(rand, event_name)
   end
 end
 
