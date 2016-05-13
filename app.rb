@@ -29,7 +29,7 @@ get '/auth' do
     token = get_access_token(params[:code])
     if token['ok']
       @page_title = "Woohoo! &middot; Frinkiac for Slack"
-      track('Authenticated successfully')
+      track('Authenticated')
       erb :success, layout: :application
     else
       erb :fail, layout: :application
@@ -42,10 +42,10 @@ end
 post '/search' do
   if params[:token] == ENV['SLACK_VERIFICATION_TOKEN']
     query = params[:text].strip
-    track('Searched quote', { 'Query': query })
     if query == ''
       response = "D'oh! You have to enter a quote from The Simpsons, like `#{params[:command]} everything's comin' up Milhouse!`"
     else
+      track('Frinked')
       response = $cache.get(parameterize(query))
       if response.nil?
         response = search(query)
