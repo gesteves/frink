@@ -32,7 +32,6 @@ get '/auth' do
       track('Authenticated successfully')
       erb :success, layout: :application
     else
-      track('Authenticated unsuccessfully')
       erb :fail, layout: :application
     end
   else
@@ -43,6 +42,7 @@ end
 post '/search' do
   if params[:token] == ENV['SLACK_VERIFICATION_TOKEN']
     query = params[:text].strip
+    track('Searched quote', { 'Query': query })
     if query == ''
       response = "D'oh! You have to enter a quote from The Simpsons, like `#{params[:command]} everything's comin' up Milhouse!`"
     else
@@ -76,7 +76,6 @@ def search(query)
     image, subtitle = screencap(query, episode, timestamp)
     text = "<#{image}|#{subtitle}>"
     response_type = 'in_channel'
-    track('Sent gif', { 'Caption': subtitle, 'URL': image })
   end
   puts text
   build_slack_response(text, response_type)
