@@ -77,7 +77,6 @@ def search(query)
     text = "<#{image}|#{subtitle}>"
     response_type = 'in_channel'
     track('Sent gif', { 'Caption': subtitle, 'URL': image })
-    end
   end
   puts text
   build_slack_response(text, response_type)
