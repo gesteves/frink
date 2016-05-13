@@ -5,12 +5,16 @@ require 'dotenv'
 require 'uri'
 require 'text'
 require 'dalli'
+require 'mixpanel-ruby'
 
 configure do
   Dotenv.load
   $stdout.sync = true
   if ENV['MEMCACHEDCLOUD_SERVERS']
     $cache = Dalli::Client.new(ENV['MEMCACHEDCLOUD_SERVERS'].split(','), username: ENV['MEMCACHEDCLOUD_USERNAME'], password: ENV['MEMCACHEDCLOUD_PASSWORD'])
+  end
+  if ENV['MIXPANEL_TOKEN']
+    $tracker = Mixpanel::Tracker.new(ENV['MIXPANEL_TOKEN'])
   end
 end
 
@@ -25,8 +29,10 @@ get '/auth' do
     token = get_access_token(params[:code])
     if token['ok']
       @page_title = "Woohoo! &middot; Frinkiac for Slack"
+      track('Authenticated successfully')
       erb :success, layout: :application
     else
+      track('Authenticated unsuccessfully')
       erb :fail, layout: :application
     end
   else
@@ -70,6 +76,8 @@ def search(query)
     image, subtitle = screencap(query, episode, timestamp)
     text = "<#{image}|#{subtitle}>"
     response_type = 'in_channel'
+    track('Sent gif', { 'Caption': subtitle, 'URL': image })
+    end
   end
   puts text
   build_slack_response(text, response_type)
@@ -102,6 +110,12 @@ end
 
 def parameterize(string)
   string.gsub(/[^a-z0-9]+/i, '-').downcase
+end
+
+def track(event_name, properties = nil)
+  if ENV['MIXPANEL_TOKEN']
+    $tracker.track(rand, event_name, properties)
+  end
 end
 
 # Borrowed from ActionView: https://github.com/rails/rails/blob/0e50b7bdf4c0f789db37e22dc45c52b082f674b4/actionview/lib/action_view/helpers/text_helper.rb#L240-L246

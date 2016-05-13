@@ -11,6 +11,7 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     json (1.8.3)
+    mixpanel-ruby (2.2.0)
     multi_xml (0.5.5)
     rack (1.6.4)
     rack-protection (1.5.3)
@@ -35,6 +36,7 @@ DEPENDENCIES
   dotenv
   foreman
   httparty
+  mixpanel-ruby
   sinatra
   text
   thin
