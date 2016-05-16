@@ -29,7 +29,7 @@ get '/auth' do
     token = get_access_token(params[:code])
     if token['ok']
       @page_title = "Woohoo! &middot; Frinkiac for Slack"
-      track('Authenticated')
+      track(rand, 'Authenticated')
       erb :success, layout: :application
     else
       erb :fail, layout: :application
@@ -45,7 +45,7 @@ post '/search' do
     if query == ''
       response = "D'oh! You have to enter a quote from The Simpsons, like `#{params[:command]} everything's comin' up Milhouse!`"
     else
-      track('Frinked')
+      track(params[:user_id], "Frink'd")
       response = $cache.get(parameterize(query))
       if response.nil?
         response = search(query)
@@ -110,9 +110,9 @@ def parameterize(string)
   string.gsub(/[^a-z0-9]+/i, '-').downcase
 end
 
-def track(event_name)
+def track(user_id, event_name)
   if ENV['MIXPANEL_TOKEN']
-    $tracker.track(rand, event_name)
+    $tracker.track(user_id, event_name)
   end
 end
 
