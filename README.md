@@ -6,6 +6,10 @@ A simple app that lets you pull Simpsons screencaps from <a href="https://frinki
 
 ## Installation
 
+If you just want to install the `/frink` command in your Slack, go to [the website](https://slashfrink.herokuapp.com/) and hit the "Add to Slack" button to authorize the app.
+
+If you'd rather host it yourself in your own Heroku account, follow these steps:
+
 1. Create a [new Slack app](https://api.slack.com/applications/new) for your team (put a placeholder redirect URI for now, like `http://localhost` or whatever).
 2. Add a new command to your new Slack app, like `/frink`. Note your app's client ID, client secret, and the verification token for the command.
 3. Come back here and push this button to create a new Heroku app: [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
