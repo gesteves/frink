@@ -108,10 +108,11 @@ def parameterize(string)
   string.gsub(/[^a-z0-9]+/i, '-').downcase
 end
 
-def track(metric_name)
+def track(metric_name, value = 1)
   if ENV['LIBRATO_TOKEN']
     Librato::Metrics.authenticate ENV['LIBRATO_USER'], ENV['LIBRATO_TOKEN']
-    Librato::Metrics.submit { metric_name => 1 }
+    metric = { metric_name => value }
+    Librato::Metrics.submit metric
   end
 end
 
