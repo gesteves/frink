@@ -5,16 +5,13 @@ require 'dotenv'
 require 'uri'
 require 'text'
 require 'dalli'
-require 'mixpanel-ruby'
+require 'librato/metrics'
 
 configure do
   Dotenv.load
   $stdout.sync = true
   if ENV['MEMCACHEDCLOUD_SERVERS']
     $cache = Dalli::Client.new(ENV['MEMCACHEDCLOUD_SERVERS'].split(','), username: ENV['MEMCACHEDCLOUD_USERNAME'], password: ENV['MEMCACHEDCLOUD_PASSWORD'])
-  end
-  if ENV['MIXPANEL_TOKEN']
-    $tracker = Mixpanel::Tracker.new(ENV['MIXPANEL_TOKEN'])
   end
 end
 
@@ -29,9 +26,10 @@ get '/auth' do
     token = get_access_token(params[:code])
     if token['ok']
       @page_title = "Woohoo! &middot; Frinkiac for Slack"
-      track(rand, 'Authenticated')
+      track('frink.authentication.success')
       erb :success, layout: :application
     else
+      track('frink.authentication.fail')
       erb :fail, layout: :application
     end
   else
@@ -45,7 +43,7 @@ post '/search' do
     if query == ''
       response = "D'oh! You have to enter a quote from The Simpsons, like `#{params[:command]} everything's comin' up Milhouse!`"
     else
-      track(params[:user_id], "Frink'd")
+      track("frink.search")
       response = $cache.get(parameterize(query))
       if response.nil?
         response = search(query)
@@ -110,9 +108,10 @@ def parameterize(string)
   string.gsub(/[^a-z0-9]+/i, '-').downcase
 end
 
-def track(user_id, event_name)
-  if ENV['MIXPANEL_TOKEN']
-    $tracker.track(user_id, event_name)
+def track(metric_name)
+  if ENV['LIBRATO_TOKEN']
+    Librato::Metrics.authenticate ENV['LIBRATO_USER'], ENV['LIBRATO_TOKEN']
+    Librato::Metrics.submit { metric_name => 1 }
   end
 end
 
