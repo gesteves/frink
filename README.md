@@ -1,4 +1,4 @@
-# Frinkiac for Slack
+# Frink
 
 A simple app that lets you pull Simpsons screencaps from <a href="https://frinkiac.com/">Frinkiac</a> in Slack! Just use the <code>/frink</code> command, followed by a quote from The Simpsons.
 
