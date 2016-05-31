@@ -26,10 +26,9 @@ get '/auth' do
     token = get_access_token(params[:code])
     if token['ok']
       @page_title = "Woohoo! &middot; Frinkiac for Slack"
-      track('frink.authentication.success')
+      track('frink.authenticated')
       erb :success, layout: :application
     else
-      track('frink.authentication.fail')
       erb :fail, layout: :application
     end
   else
