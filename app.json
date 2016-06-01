@@ -1,14 +1,14 @@
 {
-  "name": "Frinkiac for Slack",
-  "description": "A simple app that lets you pull Simpsons screencaps from Frinkiac in Slack!",
+  "name": "/frink",
+  "description": "A simple app that lets you pull Simpsons gifs from Frinkiac in Slack.",
   "keywords": [
     "slack",
     "bot",
     "simpsons"
   ],
-  "repository": "https://github.com/gesteves/frinkiac-slack",
-  "success_url": "https://github.com/gesteves/frinkiac-slack",
-  "logo": "https://raw.githubusercontent.com/gesteves/frinkiac-slack/master/frink.png",
+  "repository": "https://github.com/gesteves/frink",
+  "success_url": "https://github.com/gesteves/frink",
+  "logo": "https://raw.githubusercontent.com/gesteves/frink/master/frink.png",
   "addons": [
     "memcachedcloud"
   ],
