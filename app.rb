@@ -20,6 +20,16 @@ get '/' do
   erb :index, layout: :application
 end
 
+get '/privacy' do
+  @page_title = "/frink privacy policy"
+  erb :privacy, layout: :application
+end
+
+get '/support' do
+  @page_title = "/frink support"
+  erb :support, layout: :application
+end
+
 get '/auth' do
   @page_title = "D'oh!"
   if !params[:code].nil?
