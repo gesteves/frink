@@ -5,14 +5,14 @@
     <meta name="author" content="Guillermo Esteves" />
     <meta name="description" content="A Slack app that pulls Simpsons gifs from Frinkiac." />
     <meta name="viewport" content="width=device-width" />
-    <meta property="og:title" content="Frink"/>
+    <meta property="og:title" content="<%= @page_title %>"/>
     <meta property="og:url" content="<%= "#{request.scheme}://#{request.host_with_port}" %>"/>
     <meta property="og:image" content="https://i.imgur.com/XB1swAP.jpg" />
     <meta property="og:site_name" content="Frink"/>
-    <meta property="og:description" content="A Slack app that pulls Simpsons gifs from Frinkiac."/>
+    <meta property="og:description" content="A Slack app for posting Simpsons gifs from Frinkiac."/>
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:description" content="A Slack app that pulls Simpsons gifs from Frinkiac." />
-    <meta name="twitter:title" content="Frink" />
+    <meta name="twitter:description" content="A Slack app for posting Simpsons gifs from Frinkiac." />
+    <meta name="twitter:title" content="<%= @page_title %>" />
     <meta name="twitter:image:src" content="https://i.imgur.com/XB1swAP.jpg" />
     <meta property="og:image:width" content="640" />
     <meta property="og:image:height" content="480" />
@@ -25,23 +25,28 @@
       body {
         background-color: #fff;
         color: #333;
+        margin: 0;
+      }
+      @supports (display: flex) {
+        body {
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          min-height: 100vh;
+        }
       }
       .container {
         font-family: 'Helvetica Neue', sans-serif;
-        margin: 0 1em;
+        margin: 0 auto;
         max-width: 640px;
+        padding: 1em;
+        text-align: center;
         width: 100%;
       }
-      h1 {
-        font-size: 24x;
-        font-weight: bold;
-        line-height: 1;
-        margin: 1em 0;
-      }
-      h1 a {
-        display: inline-block;
-        margin-left: 10px;
-        vertical-align: middle;
+      .button {
+        display: block;
+        margin: 1em auto;
       }
       p {
         font-size: 16px;
@@ -50,11 +55,13 @@
         margin: 1.5em 0;
       }
       p.disclaimer {
+        border-top: 1px solid #eee;
         color: #999;
         font-size: 12px;
         font-weight: normal;
         line-height: 2;
         margin: 2em 0;
+        padding-top: 2em;
       }
       a:link,
       a:visited,

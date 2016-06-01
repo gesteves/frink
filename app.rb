@@ -16,7 +16,7 @@ configure do
 end
 
 get '/' do
-  @page_title = "/frink: Frinkiac in Slack"
+  @page_title = "/frink: frinkiac in slack"
   erb :index, layout: :application
 end
 
