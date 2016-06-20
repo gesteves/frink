@@ -36,7 +36,6 @@ get '/auth' do
     token = get_access_token(params[:code])
     if token['ok']
       @page_title = "Woohoo!"
-      track('frink.authenticated')
       erb :success, layout: :application
     else
       erb :fail, layout: :application
@@ -52,7 +51,6 @@ post '/search' do
     if query == ''
       response = "D'oh! You have to enter a quote from The Simpsons, like `#{params[:command]} everything's comin' up Milhouse!`"
     else
-      track("frink.search")
       response = $cache.get(parameterize(query))
       if response.nil?
         response = search(query)
@@ -115,14 +113,6 @@ end
 
 def parameterize(string)
   string.gsub(/[^a-z0-9]+/i, '-').downcase
-end
-
-def track(metric_name, value = 1)
-  if ENV['LIBRATO_TOKEN']
-    Librato::Metrics.authenticate ENV['LIBRATO_USER'], ENV['LIBRATO_TOKEN']
-    metric = { metric_name => value }
-    Librato::Metrics.submit metric
-  end
 end
 
 # Borrowed from ActionView: https://github.com/rails/rails/blob/0e50b7bdf4c0f789db37e22dc45c52b082f674b4/actionview/lib/action_view/helpers/text_helper.rb#L240-L246
