@@ -5,7 +5,6 @@ require 'dotenv'
 require 'uri'
 require 'text'
 require 'dalli'
-require 'librato/metrics'
 
 configure do
   Dotenv.load
