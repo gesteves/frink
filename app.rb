@@ -15,8 +15,7 @@ configure do
 end
 
 get '/' do
-  @page_title = "/frink: frinkiac in slack"
-  erb :index, layout: :application
+  redirect 'https://slack.gesteves.com/#frink'
 end
 
 get '/privacy' do
