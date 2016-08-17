@@ -15,7 +15,7 @@ configure do
 end
 
 get '/' do
-  redirect 'https://slack.gesteves.com/#frink'
+  redirect 'https://bots.gesteves.com/#frink'
 end
 
 get '/privacy' do
